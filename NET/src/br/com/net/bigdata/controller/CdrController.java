@@ -30,12 +30,15 @@ public class CdrController{
 	Charset charset;
 	List<Cdr> cdrList;
 	
+	
 	public List getCdrList(){
+		
 		return this.cdrList;
 	}
 
-	public AccessLog getRecordObject(String record) {
+	public AccessLog getRecordCdr(String record) {
 		String[] recordsStrings = StringUtils.split(record, SEPERATOR);
+		
 		
 		Cdr cdr = new Cdr();
 		cdr.setSubscriberIP(recordsStrings[5]); //Subscriber-IP
@@ -73,7 +76,7 @@ public class CdrController{
 			buffR = Files.newBufferedReader(netFilePath, charset);
 			String text;  
         	while ((text = buffR.readLine ()) != null ) {
-        		cdrList.add((Cdr) getRecordObject(text));
+        		cdrList.add((Cdr) getRecordCdr(text));
 			    //System.out.println(cliente.getAluno());  
 			}
 		} catch (FileNotFoundException e) {

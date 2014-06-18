@@ -18,7 +18,7 @@ import java.util.Map;
 
 /**
  *
- * @author Devayon
+ * @author Rodrigo Piva
  */
 public class HawqConnector extends DBConnector {
 
