@@ -5,14 +5,10 @@
 package br.com.net.bigdata.dao;
 
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.Map;
 
 //import org.apache.log4j.Logger;
 
@@ -48,8 +44,8 @@ public class HawqConnector extends DBConnector {
         } catch (ClassNotFoundException ex) {
             throw new IOException("HAWQ Postgres Driver not in classpath", ex);
         }
-        String username = "root";
-        String password = "password";
+        String username = "gpadmin";
+        String password = "";
         if (username != null) {
             if (password != null) {
                 con = DriverManager.getConnection("jdbc:postgresql://" + getDBString(), username, password);
@@ -72,9 +68,10 @@ public class HawqConnector extends DBConnector {
     }
 
     public static String getDBString() throws IOException {
-    	String host = "host";
-    	String port = "5503";
-    	String database = "database";
+    	
+    	String host = "192.168.0.3";
+    	String port = "5432";
+    	String database = "NET";
     	
     	//String host = PropConfig.getProperty(Constants.PROP_HAWQ_MASTER);
         //String port = PropConfig.getProperty(Constants.PROP_HAWQ_PORT);

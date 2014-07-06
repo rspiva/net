@@ -1,7 +1,5 @@
 package br.com.net.bigdata.model;
 
-import java.util.Date;
-
 public class Cdr extends AccessLog{
 		
 	private String subscriberIP, 
@@ -18,7 +16,7 @@ public class Cdr extends AccessLog{
 		return subscriberIP;
 	}
 
-	public void setSubscriberIP(String subscriberlIP) {
+	public void setSubscriberIP(String subscriberIP) {
 		this.subscriberIP = subscriberIP;
 	}
 

@@ -4,12 +4,13 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
 	<classpathentry kind="lib" path="lib/commons-lang3-3.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/hadoop-common-0.23.9.jar"/>
-	<classpathentry kind="lib" path="lib/hadoop-mapreduce-client-jobclient-0.23.7-sources.jar"/>
 	<classpathentry kind="lib" path="lib/postgresql-9.3-1101.jdbc41.jar"/>
 	<classpathentry kind="lib" path="lib/hawq-hadoop-javadoc.jar"/>
 	<classpathentry kind="lib" path="lib/hawq-mapreduce-ao.jar"/>
 	<classpathentry kind="lib" path="lib/hawq-mapreduce-common.jar"/>
 	<classpathentry kind="lib" path="lib/hawq-mapreduce-tool.jar"/>
 	<classpathentry kind="lib" path="lib/snakeyaml-1.12.jar"/>
+	<classpathentry kind="lib" path="lib/hadoop-mapred-0.22.0.jar"/>
+	<classpathentry kind="lib" path="lib/joda-time-2.3.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

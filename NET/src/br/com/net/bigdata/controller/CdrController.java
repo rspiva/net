@@ -38,10 +38,10 @@ public class CdrController{
 
 	public AccessLog getRecordCdr(String record) {
 		String[] recordsStrings = StringUtils.split(record, SEPERATOR);
-		
-		
+				
 		Cdr cdr = new Cdr();
-		cdr.setSubscriberIP(recordsStrings[5]); //Subscriber-IP
+		//cdr.setSubscriberIP(recordsStrings[1]); //Subscriber-IP
+		cdr.setSubscriberIP("192.169.0.1"); //Subscriber-IP
 		cdr.setUserName(recordsStrings[3]);      //User-Name
 		cdr.setUserCpf(recordsStrings[4]);		 //User-CPF
 		cdr.setContextName(recordsStrings[1]);   //Context-Name
@@ -51,16 +51,18 @@ public class CdrController{
 		SimpleDateFormat sdf1= new SimpleDateFormat("ddMMyyyy");
 		
 		try {
-			cdr.setStartTime(sdf1.parse(recordsStrings[8])); //Session_Start_time
-			cdr.setEndTime(sdf1.parse(recordsStrings[10]));  //Session_End_time
+			//cdr.setStartTime(sdf1.parse(recordsStrings[8])); //Session_Start_time
+			cdr.setStartTime(sdf1.parse("28062013"));
+			//cdr.setEndTime(sdf1.parse(recordsStrings[10]));  //Session_End_time
+			cdr.setEndTime(sdf1.parse("28062013"));
 		} catch (ParseException e) {
 			System.out.println("Formato incorreto");
 			e.printStackTrace();
 		}
 		
-		//cdr.setNetDeviceModel(recordsStrings[16]); 		//NetDeviceModel
-		//cdr.setNetDeviceOS(recordsStrings[17]);			//NetDeviceOS
-		//cdr.setNetDeviceBrowser(recordsStrings[18]);      //NetDeviceBrowser
+		cdr.setNetDeviceModel("NetDeviceModel"); 		//NetDeviceModel
+		cdr.setNetDeviceOS("NetDeviceOS");				//NetDeviceOS
+		cdr.setNetDeviceBrowser("NetDeviceBrowser");    //NetDeviceBrowser
 		
 		return cdr;
 	}
@@ -93,25 +95,25 @@ public class CdrController{
 	public void writesRecords(){
 		// TODO Auto-generated method stub
 		StringBuilder sqlInput = new StringBuilder();
-		sqlInput.append("INSERT INTO TB_CDR (StartTime,EndTime,SubscriberIP,UserName,CpfName,ContextName,MacAddress,NASIPAddress,NetDeviceModel,NetDeviceOS,NetDeviceBrowser) VALUES \n");
+		sqlInput.append("INSERT INTO hawqprod.tb_cdr (startTime,endTime,subscriberip,username,usercpf,contextname,macaddress,nasipaddress,netdevicemode,netdeviceos,netdevicebrowser) VALUES \n");
 		for(Cdr cdrT : cdrList){
 			
 			SimpleDateFormat sdf1= new SimpleDateFormat("yyyy-MM-dd");
 			
-			sqlInput.append("("); 
-			sqlInput.append(sdf1.format(cdrT.getStartTime()) + ",");
-			sqlInput.append(sdf1.format(cdrT.getEndTime())   + ",");
-			sqlInput.append(cdrT.getSubscriberIP()           + ",");
-			sqlInput.append(cdrT.getUserName()               + ",");
-			sqlInput.append(cdrT.getUserCpf()                + ",");
-			sqlInput.append(cdrT.getContextName()            + ",");
-			sqlInput.append(cdrT.getMacAdrress()             + ",");
-			sqlInput.append(cdrT.getNasIPAdrress()           + ",");
-			sqlInput.append(cdrT.getNetDeviceModel()         + ",");
-			sqlInput.append(cdrT.getNetDeviceOS()            + ",");
+			sqlInput.append("('"); 
+			sqlInput.append(sdf1.format(cdrT.getStartTime()) + "','");
+			sqlInput.append(sdf1.format(cdrT.getEndTime())   + "','");
+			sqlInput.append(cdrT.getSubscriberIP()           + "','");
+			sqlInput.append(cdrT.getUserName()               + "','");
+			sqlInput.append(cdrT.getUserCpf()                + "','");
+			sqlInput.append(cdrT.getContextName()            + "','");
+			sqlInput.append(cdrT.getMacAdrress()             + "','");
+			sqlInput.append(cdrT.getNasIPAdrress()           + "','");
+			sqlInput.append(cdrT.getNetDeviceModel()         + "','");
+			sqlInput.append(cdrT.getNetDeviceOS()            + "','");
 			sqlInput.append(cdrT.getNetDeviceBrowser()            );
 			
-			sqlInput.append("),\n");
+			sqlInput.append("'),\n");
 			
 		}
 		sqlInput.deleteCharAt(sqlInput.lastIndexOf(","));
@@ -120,13 +122,17 @@ public class CdrController{
 		HawqConnector hawqConnector;
 		try {
 			hawqConnector = new HawqConnector(true);
-			boolean isScriptExecuted = hawqConnector.execute(sqlInput.toString());
 			
+			/* verificar as classes de conexão e DAO
+			boolean isScriptExecuted = hawqConnector.execute(sqlInput.toString());
+			System.out.println(isScriptExecuted);
 			if(isScriptExecuted){
 				hawqConnector.commit();
 			}else{
 				hawqConnector.rollback();
 			}
+			*/
+			hawqConnector.execute(sqlInput.toString());
 			hawqConnector.closeConn();
 			
 		} catch (IOException e) {
